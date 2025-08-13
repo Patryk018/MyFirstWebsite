@@ -90,13 +90,19 @@
 // Jumpscare starten
 document.querySelectorAll(".cookie-btn").forEach(button => {
     button.addEventListener("click", function() {
+        let img = document.getElementById("scare");
+        let audio = document.getElementById("scream");
+
+        // Audio vorbereiten (sorgt dafür, dass es abgespielt werden darf)
+        audio.currentTime = 0; // von Anfang an starten
+        audio.play().catch(() => {
+            console.log("Autoplay blockiert, bitte klicke erneut.");
+        });
+
+        // kleine Verzögerung für Jumpscare
         setTimeout(() => {
-            let img = document.getElementById("scare");
-            let audio = document.getElementById("scream");
             img.style.display = "block";
             document.body.classList.add("flash");
-            audio.volume = 1.0; // maximale Browserlautstärke
-            audio.play();
         }, 1500);
     });
 });
@@ -124,4 +130,5 @@ document.getElementById("popupNo").addEventListener("click", showPopup);
 
 </body>
 </html>
+
 

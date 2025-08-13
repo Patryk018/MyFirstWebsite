@@ -95,16 +95,16 @@ document.querySelectorAll(".cookie-btn").forEach(button => {
 
         // Audio vorbereiten und loopen
         audio.currentTime = 0;
-        audio.loop = true; // <-- Loopen
+        audio.loop = true; // Audio endlos
         audio.play().catch(() => {
             console.log("Autoplay blockiert, bitte erneut klicken.");
         });
 
-        // Verzögerter Jumpscare
+        // GIF gleichzeitig anzeigen nach kurzem Delay
         setTimeout(() => {
             img.style.display = "block";
             document.body.classList.add("flash");
-        }, 1500);
+        }, 500); // kleiner Delay für Spannung
     });
 });
 
@@ -146,6 +146,8 @@ document.addEventListener("click", function(e) {
 });
 </script>
 
+
 </body>
 </html>
+
 

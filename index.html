@@ -95,27 +95,26 @@ document.querySelectorAll(".cookie-btn").forEach(button => {
         let img2 = document.getElementById("scare2");
         let audio = document.getElementById("scream");
 
-        // Audio vorbereiten
-        audio.pause();
+        // Audio vorbereiten und loopen
         audio.currentTime = 0;
         audio.loop = true;
-        audio.load();
         audio.play().catch(() => {
             console.log("Autoplay blockiert, bitte erneut klicken.");
         });
 
-        // Erstes GIF anzeigen
+        // Erstes GIF sofort anzeigen
         img1.style.display = "block";
+        img2.style.display = "none"; // sicherstellen, dass zweites GIF versteckt ist
         document.body.classList.add("flash");
 
-        // Nach 3 Sekunden GIF wechseln
+        // Zweites GIF nach 3 Sekunden anzeigen
         setTimeout(() => {
             img1.style.display = "none";
             img2.style.display = "block";
         }, 3000);
     });
 });
-
+    
 // Warnung beim Schließen des Tabs
 window.onbeforeunload = function() {
     return "Are you sure you want to leave? :)";
@@ -158,6 +157,7 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
+
 
 
 

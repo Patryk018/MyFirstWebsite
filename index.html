@@ -77,8 +77,9 @@
     <button class="cookie-btn">I don't accept</button>
 </div>
 
-<img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare">
-<img id="scare2" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare">
+<img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare" style="display:none; z-index:9999;">
+<img id="scare2" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare" style="display:none; z-index:9999;">
+
 <audio id="scream" src="Soundtrack.mp3"></audio>
 
 <div class="popup" id="closePopup">
@@ -95,19 +96,17 @@ document.querySelectorAll(".cookie-btn").forEach(button => {
         let img2 = document.getElementById("scare2");
         let audio = document.getElementById("scream");
 
-        // Audio vorbereiten und loopen
+        // Audio starten und loopen
         audio.currentTime = 0;
         audio.loop = true;
-        audio.play().catch(() => {
-            console.log("Autoplay blockiert, bitte erneut klicken.");
-        });
+        audio.play().catch(() => console.log("Autoplay blockiert."));
 
-        // Erstes GIF sofort anzeigen
+        // Erstes GIF sichtbar machen
         img1.style.display = "block";
-        img2.style.display = "none"; // sicherstellen, dass zweites GIF versteckt ist
+        img2.style.display = "none";
         document.body.classList.add("flash");
 
-        // Zweites GIF nach 3 Sekunden anzeigen
+        // Nach 3 Sekunden GIF wechseln
         setTimeout(() => {
             img1.style.display = "none";
             img2.style.display = "block";
@@ -157,6 +156,7 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
+
 
 
 

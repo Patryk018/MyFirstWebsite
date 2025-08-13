@@ -6,11 +6,11 @@
 <title>Cookie-Einstellungen</title>
 <style>
     body {
-    background-color: black; /* dauerhaft schwarzer Hintergrund */
-    color: #333;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 20%;
+        background-color: black;
+        color: #333;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 20%;
     }
     .cookie-box {
         background: white;
@@ -47,8 +47,17 @@
         75% { transform: translate(3px, 1px) rotate(0deg); }
         100% { transform: translate(1px, -2px) rotate(1deg); }
     }
+    #flashOverlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: black;
+        z-index: 9998;
+        display: none;
+    }
     .flash {
-        animation: flash-bg 0.2s infinite;
+        display: block;
+        animation: flash-bg 0.2s 6; /* Anzahl der Blitze */
     }
     @keyframes flash-bg {
         0% { background-color: black; }
@@ -70,6 +79,8 @@
 </head>
 <body>
 
+<div id="flashOverlay"></div>
+
 <div class="cookie-box">
     <h1>Do you accept cookies?</h1>
     <p>We use cookies to improve your experience. Please select an option.</p>
@@ -77,8 +88,8 @@
     <button class="cookie-btn">I don't accept</button>
 </div>
 
-<img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare" style="display:none; z-index:9999;">
-<img id="scare2" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare" style="display:none; z-index:9999;">
+<img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare">
+<img id="scare2" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare">
 
 <audio id="scream" src="Soundtrack.mp3"></audio>
 
@@ -95,25 +106,29 @@ document.querySelectorAll(".cookie-btn").forEach(button => {
         let img1 = document.getElementById("scare");
         let img2 = document.getElementById("scare2");
         let audio = document.getElementById("scream");
+        let overlay = document.getElementById("flashOverlay");
 
-        // Audio starten und loopen
+        // Audio starten
         audio.currentTime = 0;
         audio.loop = true;
         audio.play().catch(() => console.log("Autoplay blockiert."));
 
-        // Erstes GIF sichtbar machen
+        // Erstes GIF + Overlay anzeigen
         img1.style.display = "block";
         img2.style.display = "none";
-        document.body.classList.add("flash");
+        overlay.style.display = "block";
+        overlay.classList.add("flash");
 
-        // Nach 3 Sekunden GIF wechseln
+        // Nach 2 Sekunden GIF wechseln und Overlay ausblenden
         setTimeout(() => {
             img1.style.display = "none";
             img2.style.display = "block";
+            overlay.style.display = "none";
+            overlay.classList.remove("flash");
         }, 2000);
     });
 });
-    
+
 // Warnung beim Schließen des Tabs
 window.onbeforeunload = function() {
     return "Are you sure you want to leave? :)";
@@ -130,12 +145,10 @@ document.addEventListener("keydown", function(e) {
 function showPopup() {
     let popup = document.getElementById("closePopup");
     popup.style.display = "block";
-
-    // Fokus auf das Popup halten, Fenster schwerer zu schließen
     popup.focus();
     setTimeout(() => {
         if (popup.style.display === "block") {
-            showPopup(); // rekursiv halten
+            showPopup();
         }
     }, 1000);
 }
@@ -143,7 +156,6 @@ function showPopup() {
 document.getElementById("popupYes").addEventListener("click", showPopup);
 document.getElementById("popupNo").addEventListener("click", showPopup);
 
-// Klick außerhalb Popup blockieren
 document.addEventListener("click", function(e) {
     let popup = document.getElementById("closePopup");
     if (popup.style.display === "block" && !popup.contains(e.target)) {
@@ -152,18 +164,5 @@ document.addEventListener("click", function(e) {
 });
 </script>
 
-
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

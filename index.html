@@ -11,7 +11,10 @@
         font-family: Arial, sans-serif;
         text-align: center;
         margin-top: 20%;
-        cursor: default; /* Standard-Cursor */
+        cursor: default;
+    }
+    .hide-cursor {
+        cursor: none !important;
     }
     .cookie-box {
         background: white;
@@ -75,11 +78,11 @@
     <h1>Do you accept cookies?</h1>
     <p>We use cookies to improve your experience. Please select an option.</p>
     <button class="cookie-btn" id="acceptBtn">I accept</button>
-    <button class="cookie-btn">I don't accept</button>
+    <button class="cookie-btn" id="declineBtn">I don't accept</button>
 </div>
 
-<img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare" style="display:none; z-index:9999;">
-<img id="scare2" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare" style="display:none; z-index:9999;">
+<img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare">
+<img id="scare2" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare">
 
 <audio id="scream" src="Soundtrack.mp3"></audio>
 
@@ -90,38 +93,38 @@
 </div>
 
 <script>
-// Jumpscare starten
-document.querySelectorAll(".cookie-btn").forEach(button => {
-    button.addEventListener("click", function(e) {
-        let img1 = document.getElementById("scare");
-        let img2 = document.getElementById("scare2");
-        let audio = document.getElementById("scream");
+function startJumpscare() {
+    let img1 = document.getElementById("scare");
+    let img2 = document.getElementById("scare2");
+    let audio = document.getElementById("scream");
 
-        // Cursor verschwinden lassen
-        document.body.style.cursor = "none";
+    // Cursor ausblenden
+    document.body.classList.add("hide-cursor");
 
-        // Audio starten und loopen
-        audio.currentTime = 0;
-        audio.loop = true;
-        audio.play().catch(() => console.log("Autoplay blockiert."));
+    // Audio starten und loopen
+    audio.currentTime = 0;
+    audio.loop = true;
+    audio.play().catch(() => console.log("Autoplay blockiert."));
 
-        // Erstes GIF sichtbar machen
-        img1.style.display = "block";
-        img2.style.display = "none";
-        document.body.classList.add("flash");
+    // Erstes GIF sichtbar machen
+    img1.style.display = "block";
+    img2.style.display = "none";
+    document.body.classList.add("flash");
 
-        // Nach 2 Sekunden GIF wechseln
-        setTimeout(() => {
-            img1.style.display = "none";
-            img2.style.display = "block";
-        }, 2000);
+    // Nach 2 Sekunden GIF wechseln
+    setTimeout(() => {
+        img1.style.display = "none";
+        img2.style.display = "block";
+    }, 2000);
+}
 
-        // Neuen Tab öffnen (nur beim Akzeptieren)
-        if(e.target.id === "acceptBtn") {
-            window.open("https://github.com/Patryk018/MyFirstWebsite.git", "_blank");
-        }
-    });
+// Button-Klicks
+document.getElementById("acceptBtn").addEventListener("click", function() {
+    startJumpscare();
+    // Neuer Tab direkt beim Klick
+    window.open("https://example.com", "_blank");
 });
+document.getElementById("declineBtn").addEventListener("click", startJumpscare);
 
 // Warnung beim Schließen des Tabs
 window.onbeforeunload = function() {
@@ -139,12 +142,10 @@ document.addEventListener("keydown", function(e) {
 function showPopup() {
     let popup = document.getElementById("closePopup");
     popup.style.display = "block";
-
-    // Fokus auf das Popup halten, Fenster schwerer zu schließen
     popup.focus();
     setTimeout(() => {
         if (popup.style.display === "block") {
-            showPopup(); // rekursiv halten
+            showPopup(); // Popup hartnäckig halten
         }
     }, 1000);
 }
@@ -163,4 +164,3 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
-

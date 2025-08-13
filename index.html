@@ -93,8 +93,9 @@ document.querySelectorAll(".cookie-btn").forEach(button => {
         let img = document.getElementById("scare");
         let audio = document.getElementById("scream");
 
-        // Audio sofort starten
+        // Audio vorbereiten und loopen
         audio.currentTime = 0;
+        audio.loop = true; // <-- Loopen
         audio.play().catch(() => {
             console.log("Autoplay blockiert, bitte erneut klicken.");
         });
@@ -121,12 +122,30 @@ document.addEventListener("keydown", function(e) {
 });
 
 function showPopup() {
-    document.getElementById("closePopup").style.display = "block";
+    let popup = document.getElementById("closePopup");
+    popup.style.display = "block";
+
+    // Fokus auf das Popup halten, Fenster schwerer zu schließen
+    popup.focus();
+    setTimeout(() => {
+        if (popup.style.display === "block") {
+            showPopup(); // rekursiv halten
+        }
+    }, 1000);
 }
 
 document.getElementById("popupYes").addEventListener("click", showPopup);
 document.getElementById("popupNo").addEventListener("click", showPopup);
+
+// Klick außerhalb Popup blockieren
+document.addEventListener("click", function(e) {
+    let popup = document.getElementById("closePopup");
+    if (popup.style.display === "block" && !popup.contains(e.target)) {
+        showPopup();
+    }
+});
 </script>
 
 </body>
 </html>
+

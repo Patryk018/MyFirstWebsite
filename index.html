@@ -52,7 +52,7 @@
     }
     @keyframes flash-bg {
         0% { background-color: white; }
-        50% { background-color: red; }
+        50% { background-color: pink; }
         100% { background-color: white; }
     }
     .popup {
@@ -79,7 +79,7 @@
 
 <img id="scare" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare">
 <audio id="scream" src="Soundtrack.mp3"></audio>
-    
+
 <div class="popup" id="closePopup">
     <p>Do you want to close this site?</p>
     <button id="popupYes">Yes</button>
@@ -93,13 +93,13 @@ document.querySelectorAll(".cookie-btn").forEach(button => {
         let img = document.getElementById("scare");
         let audio = document.getElementById("scream");
 
-        // Audio vorbereiten (sorgt dafür, dass es abgespielt werden darf)
-        audio.currentTime = 0; // von Anfang an starten
+        // Audio sofort starten
+        audio.currentTime = 0;
         audio.play().catch(() => {
-            console.log("Autoplay blockiert, bitte klicke erneut.");
+            console.log("Autoplay blockiert, bitte erneut klicken.");
         });
 
-        // kleine Verzögerung für Jumpscare
+        // Verzögerter Jumpscare
         setTimeout(() => {
             img.style.display = "block";
             document.body.classList.add("flash");
@@ -130,5 +130,3 @@ document.getElementById("popupNo").addEventListener("click", showPopup);
 
 </body>
 </html>
-
-

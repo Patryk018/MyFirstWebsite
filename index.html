@@ -80,6 +80,8 @@
 
 <img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare">
 <img id="scare2" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare">
+<img id="scare3" src="https://media1.tenor.com/m/u6yAHXKFe0YAAAAd/scary-demon-girl.gif" alt="Scare">
+<img id="scare4" src="https://media1.tenor.com/m/NGe9XWLgm6MAAAAC/black-dark.gif" alt="Scare">
 
 <audio id="scream" src="Soundtrack.mp3"></audio>
 
@@ -90,7 +92,6 @@
 </div>
 
 <script>
-// Mouse Lock Funktion
 function lockMouse() {
     let body = document.body;
     body.requestPointerLock = body.requestPointerLock || body.mozRequestPointerLock || body.webkitRequestPointerLock;
@@ -99,12 +100,15 @@ function lockMouse() {
     }
 }
 
-// Jumpscare starten + Mouse Lock
 function startJumpscare() {
-    let img1 = document.getElementById("scare");
-    let img2 = document.getElementById("scare2");
-    let audio = document.getElementById("scream");
+    let images = [
+        document.getElementById("scare"),  // Erstes Bild
+        document.getElementById("scare2"), // Danach in Schleife
+        document.getElementById("scare3"),
+        document.getElementById("scare4")
+    ];
 
+    let audio = document.getElementById("scream");
     document.body.style.cursor = "none";
     lockMouse();
 
@@ -112,26 +116,30 @@ function startJumpscare() {
     audio.loop = true;
     audio.play().catch(() => console.log("Autoplay blockiert."));
 
-    img1.style.display = "block";
-    img2.style.display = "none";
     document.body.classList.add("flash");
 
+    // Erstes Bild anzeigen
+    images.forEach(img => img.style.display = "none");
+    images[0].style.display = "block";
+
+    // Nach 2 Sekunden auf Loop umsteigen
     setTimeout(() => {
-        img1.style.display = "none";
-        img2.style.display = "block";
+        let index = 1; // Start bei scare2
+        setInterval(() => {
+            images.forEach(img => img.style.display = "none");
+            images[index].style.display = "block";
+            index = (index % 3) + 1; // 1→2→3→1 (entspricht scare2, scare3, scare4)
+        }, 1500);
     }, 2000);
 }
 
-// Buttons verbinden
 document.getElementById("acceptBtn").addEventListener("click", startJumpscare);
 document.getElementById("declineBtn").addEventListener("click", startJumpscare);
 
-// Warnung beim Schließen des Tabs
 window.onbeforeunload = function() {
     return "Are you sure you want to leave? :)";
 };
 
-// ESC- oder Popup-Blockade
 document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") {
         e.preventDefault();
@@ -163,3 +171,4 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
+

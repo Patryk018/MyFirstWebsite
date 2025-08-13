@@ -77,8 +77,8 @@
     <button class="cookie-btn">I don't accept</button>
 </div>
 
-<img id="scare1" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare">
-<img id="scare" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare">
+<img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare">
+<img id="scare2" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare">
 <audio id="scream" src="Soundtrack.mp3"></audio>
 
 <div class="popup" id="closePopup">
@@ -91,23 +91,28 @@
 // Jumpscare starten
 document.querySelectorAll(".cookie-btn").forEach(button => {
     button.addEventListener("click", function() {
-        let img = document.getElementById("scare");
+        let img1 = document.getElementById("scare");
+        let img2 = document.getElementById("scare2");
         let audio = document.getElementById("scream");
 
         // Audio vorbereiten
-        audio.pause();           // evtl. vorherige Wiedergabe stoppen
+        audio.pause();
         audio.currentTime = 0;
         audio.loop = true;
-        audio.load();            // sicherstellen, dass Audio bereit ist
-
-        // Audio direkt vom Klick starten
+        audio.load();
         audio.play().catch(() => {
             console.log("Autoplay blockiert, bitte erneut klicken.");
         });
 
-        // GIF gleichzeitig anzeigen
-        img.style.display = "block";
+        // Erstes GIF anzeigen
+        img1.style.display = "block";
         document.body.classList.add("flash");
+
+        // Nach 3 Sekunden GIF wechseln
+        setTimeout(() => {
+            img1.style.display = "none";
+            img2.style.display = "block";
+        }, 3000);
     });
 });
 
@@ -153,6 +158,7 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
+
 
 
 

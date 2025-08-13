@@ -6,11 +6,11 @@
 <title>Cookie-Einstellungen</title>
 <style>
     body {
-        background-color: #f8f8f8;
-        color: #333;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        margin-top: 20%;
+    background-color: black; /* dauerhaft schwarzer Hintergrund */
+    color: #333;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 20%;
     }
     .cookie-box {
         background: white;
@@ -51,9 +51,9 @@
         animation: flash-bg 0.2s infinite;
     }
     @keyframes flash-bg {
-        0% { background-color: white; }
-        50% { background-color: black; }
-        100% { background-color: white; }
+        0% { background-color: black; }
+        50% { background-color: white; }
+        100% { background-color: black; }
     }
     .popup {
         display: none;
@@ -156,6 +156,7 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
+
 
 
 

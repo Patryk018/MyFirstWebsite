@@ -77,6 +77,7 @@
     <button class="cookie-btn">I don't accept</button>
 </div>
 
+<img id="scare1" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare">
 <img id="scare" src="https://media.tenor.com/O_x4UCmt5p0AAAAj/among-us-twerk.gif" alt="Scare">
 <audio id="scream" src="Soundtrack.mp3"></audio>
 
@@ -93,18 +94,20 @@ document.querySelectorAll(".cookie-btn").forEach(button => {
         let img = document.getElementById("scare");
         let audio = document.getElementById("scream");
 
-        // Audio vorbereiten und loopen
+        // Audio vorbereiten
+        audio.pause();           // evtl. vorherige Wiedergabe stoppen
         audio.currentTime = 0;
-        audio.loop = true; // Audio endlos
+        audio.loop = true;
+        audio.load();            // sicherstellen, dass Audio bereit ist
+
+        // Audio direkt vom Klick starten
         audio.play().catch(() => {
             console.log("Autoplay blockiert, bitte erneut klicken.");
         });
 
-        // GIF gleichzeitig anzeigen nach kurzem Delay
-        setTimeout(() => {
-            img.style.display = "block";
-            document.body.classList.add("flash");
-        });
+        // GIF gleichzeitig anzeigen
+        img.style.display = "block";
+        document.body.classList.add("flash");
     });
 });
 
@@ -150,6 +153,7 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
+
 
 
 

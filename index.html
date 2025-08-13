@@ -13,9 +13,6 @@
         margin-top: 20%;
         cursor: default;
     }
-    .hide-cursor {
-        cursor: none !important;
-    }
     .cookie-box {
         background: white;
         padding: 20px;
@@ -78,7 +75,7 @@
     <h1>Do you accept cookies?</h1>
     <p>We use cookies to improve your experience. Please select an option.</p>
     <button class="cookie-btn" id="acceptBtn">I accept</button>
-    <button class="cookie-btn" id="declineBtn">I don't accept</button>
+    <button class="cookie-btn">I don't accept</button>
 </div>
 
 <img id="scare" src="https://media.tenor.com/rpLjR-cCx6AAAAAi/scary-rooms-low-detailed.gif" alt="Scare">
@@ -93,38 +90,41 @@
 </div>
 
 <script>
+// Mouse Lock Funktion
+function lockMouse() {
+    let body = document.body;
+    body.requestPointerLock = body.requestPointerLock || body.mozRequestPointerLock || body.webkitRequestPointerLock;
+    if (body.requestPointerLock) {
+        body.requestPointerLock();
+    }
+}
+
+// Jumpscare starten + Mouse Lock
 function startJumpscare() {
     let img1 = document.getElementById("scare");
     let img2 = document.getElementById("scare2");
     let audio = document.getElementById("scream");
 
-    // Cursor ausblenden
-    document.body.classList.add("hide-cursor");
+    document.body.style.cursor = "none";
+    lockMouse();
 
-    // Audio starten und loopen
     audio.currentTime = 0;
     audio.loop = true;
     audio.play().catch(() => console.log("Autoplay blockiert."));
 
-    // Erstes GIF sichtbar machen
     img1.style.display = "block";
     img2.style.display = "none";
     document.body.classList.add("flash");
 
-    // Nach 2 Sekunden GIF wechseln
     setTimeout(() => {
         img1.style.display = "none";
         img2.style.display = "block";
     }, 2000);
 }
 
-// Button-Klicks
-document.getElementById("acceptBtn").addEventListener("click", function() {
-    startJumpscare();
-    // Neuer Tab direkt beim Klick
-    window.open("https://patryk018.github.io/MyFirstWebsite/", "_blank");
-});
-document.getElementById("declineBtn").addEventListener("click", startJumpscare);
+// Buttons verbinden
+document.getElementById("acceptBtn").addEventListener("click", startJumpscare);
+document.querySelector(".cookie-btn:nth-child(2)").addEventListener("click", startJumpscare);
 
 // Warnung beim Schließen des Tabs
 window.onbeforeunload = function() {
@@ -145,7 +145,7 @@ function showPopup() {
     popup.focus();
     setTimeout(() => {
         if (popup.style.display === "block") {
-            showPopup(); // Popup hartnäckig halten
+            showPopup();
         }
     }, 1000);
 }
@@ -153,7 +153,6 @@ function showPopup() {
 document.getElementById("popupYes").addEventListener("click", showPopup);
 document.getElementById("popupNo").addEventListener("click", showPopup);
 
-// Klick außerhalb Popup blockieren
 document.addEventListener("click", function(e) {
     let popup = document.getElementById("closePopup");
     if (popup.style.display === "block" && !popup.contains(e.target)) {
@@ -164,4 +163,3 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
-
